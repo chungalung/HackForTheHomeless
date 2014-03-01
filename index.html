@@ -142,11 +142,11 @@
 	var maxLng = map.getBounds()[1][1];
 	*/
 	
-	/*
-	var bounds = map.getBounds();
-	var NE = bounds.getNorthEast();
-	var SW = bounds.getSouthWest();
-	*/
+	
+	var bounds;
+	var NE;
+	var SW;
+	
 	// clear overlay function
 	google.maps.Map.prototype.clearOverlays = function() {
 		for (var i = 0; i < markersArray.length; i++ ) {
@@ -177,26 +177,36 @@
 		 google.maps.event.trigger(map, "resize");
 		 map.setCenter(center); 
 	});
+	 google.maps.event.addListener(map, 'idle', function() {
+		  bounds =  map.getBounds();
+		  ne = bounds.getNorthEast();
+		  sw = bounds.getSouthWest();
+		  //do whatever you want with those bounds
+ 	});
 	
+	google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+    	//this part runs when the mapobject is created and rendered
+    	bounds =  map.getBounds();
+		NE = bounds.getNorthEast();
+		SW = bounds.getSouthWest();
+		//alert( bounds );
+		updateMarkers();
+		
+	});
 	
 
     function displayInfo(event){
     	alert( "Address: " + event[0] ); 
-    	alert( bounds );
     }
     
     function updateMarkers( ){
     	map.clearOverlays();
-    	var bounds = map.getBounds();
-		//var NE = bounds.getNorthEast();
-		//var SW = bounds.getSouthWest();
-		alert( bounds );
     	
-    	/*
+    	
     	events.length = 0;
     	$.ajax({
     	    type: "POST",
-       		url: BASE_URL+"distrobutionInfo.php" ,
+       		url: BASE_URL+"distributionInfo.php" ,
         	data: { 
         		zoom: zoomValue,
     			lat: latValue,
@@ -205,6 +215,7 @@
         	dataType: "json",
         	timeout: 1500, // in milliseconds
     		success: function( data ) {
+    			/*
     			for( int i = 0; i < data["events"].length; i++ ){
 					events[i][0] = data["events"][i]["name"];
 					events[i][1] = data["events"][i]["lat"];
@@ -214,6 +225,7 @@
 					events[i][5] = data["events"][i]["start"];
 					events[i][6] = data["events"][i]["end"];
     			}
+    			*/
 				// Initialize Variables
 				for (var i = 0; i < events.length; i++) {  
 					var marker = new google.maps.Marker({
@@ -239,11 +251,12 @@
 			},
 			error: function(request, status, err) {
 				alert("ERROR: Refresh Page");
+				alert( request );
 			}
 		});
-    	*/
     	
     	
+    	/*
     	// comment this out when we implement POST and AJAX
     	// Initialize Variables
     	//$('#loading').removeClass('hidden');
@@ -267,13 +280,10 @@
         		}
       		})(marker, i));
     	}
-    	
+    	*/
     	
     }
     
-	$(document).ready(function(){
-		updateMarkers();
-	}); 
 	
     </script>
     <script src="js/bootstrap.min.js"></script>

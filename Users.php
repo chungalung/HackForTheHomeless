@@ -44,7 +44,7 @@ function addDonor($username, $email, $password, $organization, $address, $phoneN
 	$latitude = (float)$geocode->getLatitude();
 	$longitude = (float)$geocode->getLongitude();
 	
-	$query = "INSERT INTO donor (username, email, password, organization, address, phoneNumber, latitude, longitude, createDate, validated, type)
+	$query = "INSERT INTO `donor` (`username`, `email`, `password`, `organization`, `address`, `phoneNumber`, `latitude`, `longitude`, `createDate`, `validated`, `type`)
 VALUE('$username', '$email', '$password', '$organization', '$address', '$phoneNumber', '$latitude', '$longitude', NOW(), 0, $type)";
 	$res = $mysqli->query($query);
 	if ($res) {
@@ -85,7 +85,7 @@ function addDistributor($username, $email, $password, $organization, $address, $
 	$latitude = (float)$geocode->getLatitude();
 	$longitude = (float)$geocode->getLongitude();
 	
-	$query = "INSERT INTO donor (username, email, password, organization, address, phoneNumber, latitude, longitude, createDate, validated)
+	$query = "INSERT INTO `donor` (`username`, `email`, `password`, `organization`, `address`, `phoneNumber`, `latitude`, `longitude`, `createDate`, `validated`)
 VALUE('$username', '$email', '$password', '$organization', '$address', '$phoneNumber', '$latitude', '$longitude', NOW(), 0)";
 	$res = $mysqli->query($query);
 	if ($res) {
@@ -98,7 +98,7 @@ function donorLogin($username, $password)
 {
 	$username = mysql_real_escape_string($username);
 	$password = mysql_real_escape_string($password);
-	$query = "SELECT id, username, organization FROM donor WHERE `username` = '$username AND `password` = '$password' LIMIT 1";
+	$query = "SELECT `id`, `username`, `organization` FROM `donor` WHERE `username` = '$username AND `password` = '$password' LIMIT 1";
 	$res = $mysqli->query($query);
 	if (mysql_num_rows($res)) {
 		return mysql_fetch_assoc($res);
@@ -107,7 +107,7 @@ function donorLogin($username, $password)
 }
 function donorFindById($id)
 {
-	$query = "SELECT id, username, organization FROM donor WHERE `id` = '$id' LIMIT 1";
+	$query = "SELECT `id`, `username`, `organization` FROM `donor` WHERE `id` = '$id' LIMIT 1";
 	$res = $mysqli->query($query);
 
 	if (mysql_num_rows($res)) {
@@ -121,7 +121,7 @@ function distributorLogin($username, $password)
 {
 	$username = mysql_real_escape_string($username);
 	$password = mysql_real_escape_string($password);
-	$query = "SELECT id, username, organization FROM distributor WHERE `username` = '$username AND `password` = '$password' LIMIT 1";
+	$query = "SELECT `id`, `username`, `organization` FROM `distributor` WHERE `username` = '$username AND `password` = '$password' LIMIT 1";
 	$res = $mysqli->query($query);
 	if (mysql_num_rows($res)) {
 		return mysql_fetch_assoc($res);
@@ -130,7 +130,7 @@ function distributorLogin($username, $password)
 }
 function distributorFindById($id)
 {
-	$query = "SELECT id, username, organization FROM distributor WHERE `id` = '$id' LIMIT 1";
+	$query = "SELECT `id`, `username`, `organization` FROM `distributor` WHERE `id` = '$id' LIMIT 1";
 	$res = $mysqli->query($query);
 
 	if (mysql_num_rows($res)) {
@@ -142,7 +142,7 @@ function distributorFindById($id)
 function findDelivery($minLat, $maxLat, $minLon, $maxLon)
 {
 	//echo "success";
-	$query = "SELECT * FROM deliveries WHERE `validated` = 0 AND $minLat < `latitude` AND $maxLat > `latitude` AND $minLon < `longitude` AND $maxLon > `longitude'";
+	$query = "SELECT * FROM `deliveries` WHERE `validated` = 0 AND $minLat < `latitude` AND $maxLat > `latitude` AND $minLon < `longitude` AND $maxLon > `longitude'";
 	//echo "success";
 	$res = $mysqli->query($query);
 	//echo "success";
@@ -156,7 +156,7 @@ function findDelivery($minLat, $maxLat, $minLon, $maxLon)
 function findDistribution($minLat, $maxLat, $minLon, $maxLon)
 {
 	echo "success ";
-	$query = "SELECT * FROM distributions WHERE `validated` = 0 AND $minLat < `latitude` AND $maxLat > `latitude` AND $minLon < `longitude` AND $maxLon > `longitude'";
+	$query = "SELECT * FROM `distributions` WHERE `validated` = 0 AND $minLat < `latitude` AND $maxLat > `latitude` AND $minLon < `longitude` AND $maxLon > `longitude'";
 	echo "success ";
 	if ($mysqli->errno) 
     	echo "FAILED";

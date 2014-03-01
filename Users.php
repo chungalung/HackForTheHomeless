@@ -191,11 +191,16 @@ function findDelivery($minLat, $maxLat, $minLon, $maxLon)
 	//echo "success";
 	$res = $mysqli->query($query);
 	//echo "success";
+<<<<<<< HEAD
 	
 	$info = array();
 	while ($temp = mysqli_fetch_array($res)) {
 		$info[] = $temp;
 	}
+=======
+	$info = mysqli_fetch_array($res);
+	//echo "success";
+>>>>>>> 4cd99da293c92da439e81f0164adba5083f4f264
 	return $info;
 }
 function findDistribution($minLat, $maxLat, $minLon, $maxLon)
@@ -215,6 +220,7 @@ function findDistribution($minLat, $maxLat, $minLon, $maxLon)
 	//echo "success ";
 	
 	$res = $mysqli->query($query);
+<<<<<<< HEAD
 	//print_r($res);
 	
 	$info = array();
@@ -223,6 +229,10 @@ function findDistribution($minLat, $maxLat, $minLon, $maxLon)
 	}
 	
 	//$info = mysqli_fetch_array($res);
+=======
+
+	$info = mysqli_fetch_array($res);
+>>>>>>> 4cd99da293c92da439e81f0164adba5083f4f264
 	//var_dump($info);
 	return $info;
 }

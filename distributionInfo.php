@@ -9,15 +9,20 @@
 	$east = (double)  $_GET['east'];
 	$west = (double) $_GET['west'];
 	
-	/*
+	
 	echo $north;
 	echo $south;
 	echo $east;
 	echo $west;
-	*/
 	
+<<<<<<< HEAD
 	$result = findDistribution( $south, $north, $west, $east );
 	//var_dump( $result);
+=======
+	
+	$result = findDistribution( $south, $north, $west, $east );
+	echo $result;
+>>>>>>> 4cd99da293c92da439e81f0164adba5083f4f264
 	
 	$data = array( "events" => array() );	
 	if( result != false ){	
@@ -27,9 +32,13 @@
 						"address" => $event[4], "start" => $event[5], "end" => $event[6] );
 		}
 	}
+<<<<<<< HEAD
 
 	
 	/*
+=======
+	
+>>>>>>> 4cd99da293c92da439e81f0164adba5083f4f264
 	$data = array( "events" => array() );	
 	$event = array( "name" => "feedThePoor", "lat" => 37.3184130 , "lng" => -121.8686210,
 						"address" => "300-312 E Alma Ave San Jose, CA 95112", "start" => "2014-03-01 21:59:00", "end" => "2014-03-01 23:00:00" );

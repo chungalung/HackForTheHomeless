@@ -1,7 +1,5 @@
 <?php
 
-	$result = findDistribution( 30,40,-150,0);
-	echo $result;
 
 function addDonor($username, $email, $password, $organization, $address, $phoneNumber, $type)
 {
@@ -22,18 +20,18 @@ function addDonor($username, $email, $password, $organization, $address, $phoneN
 	$chain    = new \Geocoder\Provider\ChainProvider(array(
 		new \Geocoder\Provider\GeocoderCaProvider($adapter),
 		new \Geocoder\Provider\ArcGISOnlineProvider($adapter, 'USA', true),
-		new \Geocoder\Provider\OpenStreetMapsProvider($adapter),
+		new \Geocoder\Provider\OpenStreetMapProvider($adapter),
 		new \Geocoder\Provider\GoogleMapsProvider($adapter, '', 'USA', true),
 	));
 	$geocoder->registerProvider($chain);
 
-	$username = mysql_real_escape_string($username);
-	$email = mysql_real_escape_string($email);
-	$password = mysql_real_escape_string($password);
-	$organization = mysql_real_escape_string($organization);
-	$address = mysql_real_escape_string($address);
-	$phoneNumber = mysql_real_escape_string($phoneNumber);
-	$type = mysql_real_escape_string($type);
+	$username =$mysqli->real_escape_string($username);
+	$email =$mysqli->real_escape_string($email);
+	$password =$mysqli->real_escape_string($password);
+	$organization =$mysqli->real_escape_string($organization);
+	$address =$mysqli->real_escape_string($address);
+	$phoneNumber =$mysqli->real_escape_string($phoneNumber);
+	$type =$mysqli->real_escape_string($type);
 	
 	try
 	{
@@ -49,10 +47,10 @@ function addDonor($username, $email, $password, $organization, $address, $phoneN
 	$query = "INSERT INTO `donor` (`username`, `email`, `password`, `organization`, `address`, `phoneNumber`, `latitude`, `longitude`, `createDate`, `validated`, `type`)
 VALUE('$username', '$email', '$password', '$organization', '$address', '$phoneNumber', '$latitude', '$longitude', NOW(), 0, $type)";
 	$res = $mysqli->query($query);
-	if ($res) {
-		return mysql_insert_id();
-	}
-	return false;
+	echo $mysqli->errno;
+	if($mysqli->errno)
+		return false;
+	return true;
 }
 
 
@@ -76,17 +74,17 @@ function addDistributor($username, $email, $password, $organization, $address, $
 	$chain    = new \Geocoder\Provider\ChainProvider(array(
 		new \Geocoder\Provider\GeocoderCaProvider($adapter),
 		new \Geocoder\Provider\ArcGISOnlineProvider($adapter, 'USA', true),
-		new \Geocoder\Provider\OpenStreetMapsProvider($adapter),
+		new \Geocoder\Provider\OpenStreetMapProvider($adapter),
 		new \Geocoder\Provider\GoogleMapsProvider($adapter, '', 'USA', true),
 	));
 	$geocoder->registerProvider($chain);
 
-	$username = mysql_real_escape_string($username);
-	$email = mysql_real_escape_string($email);
-	$password = mysql_real_escape_string($password);
-	$organization = mysql_real_escape_string($organization);
-	$address = mysql_real_escape_string($address);
-	$phoneNumber = mysql_real_escape_string($phoneNumber);
+	$username =$mysqli->real_escape_string($username);
+	$email =$mysqli->real_escape_string($email);
+	$password =$mysqli->real_escape_string($password);
+	$organization =$mysqli->real_escape_string($organization);
+	$address =$mysqli->real_escape_string($address);
+	$phoneNumber =$mysqli->real_escape_string($phoneNumber);
 	
 	try
 	{
@@ -99,13 +97,13 @@ function addDistributor($username, $email, $password, $organization, $address, $
 	$latitude = (float)$geocode->getLatitude();
 	$longitude = (float)$geocode->getLongitude();
 	
-	$query = "INSERT INTO `donor` (`username`, `email`, `password`, `organization`, `address`, `phoneNumber`, `latitude`, `longitude`, `createDate`, `validated`)
+	$query = "INSERT INTO `distributor` (`username`, `email`, `password`, `organization`, `address`, `phoneNumber`, `latitude`, `longitude`, `createDate`, `validated`)
 VALUE('$username', '$email', '$password', '$organization', '$address', '$phoneNumber', '$latitude', '$longitude', NOW(), 0)";
 	$res = $mysqli->query($query);
-	if ($res) {
-		return mysql_insert_id();
-	}
-	return false;
+	echo $mysqli->errno;
+	if($mysqli->errno)
+		return false;
+	return true;
 }
 
 function donorLogin($username, $password)
@@ -120,9 +118,10 @@ function donorLogin($username, $password)
 	if ($mysqli->errno) 
 		printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
 
-	$username = mysql_real_escape_string($username);
-	$password = mysql_real_escape_string($password);
-	$query = "SELECT `id`, `username`, `organization` FROM `donor` WHERE `username` = '$username AND `password` = '$password' LIMIT 1";
+	$username =$mysqli->real_escape_string($username);
+	$password =$mysqli->real_escape_string($password);
+	$query = "SELECT * FROM `donor` WHERE `username` = '$username' AND `password` = '$password' LIMIT 1";
+	//echo $query;
 	$res = $mysqli->query($query);
 	return mysqli_fetch_array($res);
 }
@@ -138,7 +137,7 @@ function donorFindById($id)
 	if ($mysqli->errno) 
 		printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
 
-	$query = "SELECT `id`, `username`, `organization` FROM `donor` WHERE `id` = '$id' LIMIT 1";
+	$query = "SELECT * FROM `donor` WHERE `id` = '$id' LIMIT 1";
 	$res = $mysqli->query($query);
 	return mysqli_fetch_array($res);
 }
@@ -155,9 +154,9 @@ function distributorLogin($username, $password)
 	if ($mysqli->errno) 
 		printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
 
-	$username = mysql_real_escape_string($username);
-	$password = mysql_real_escape_string($password);
-	$query = "SELECT `id`, `username`, `organization` FROM `distributor` WHERE `username` = '$username AND `password` = '$password' LIMIT 1";
+	$username =$mysqli->real_escape_string($username);
+	$password =$mysqli->real_escape_string($password);
+	$query = "SELECT * FROM `distributor` WHERE `username` = '$username' AND `password` = '$password' LIMIT 1";
 	$res = $mysqli->query($query);
 	return mysqli_fetch_array($res);
 }
@@ -172,7 +171,7 @@ function distributorFindById($id)
 
 	if ($mysqli->errno) 
 		printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
-	$query = "SELECT `id`, `username`, `organization` FROM `distributor` WHERE `id` = '$id' LIMIT 1";
+	$query = "SELECT * FROM `distributor` WHERE `id` = '$id' LIMIT 1";
 	$res = $mysqli->query($query);
 	return mysqli_fetch_array($res);
 }

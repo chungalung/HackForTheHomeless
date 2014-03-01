@@ -11,7 +11,7 @@ if ($mysqli->errno)
     printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
 
 
-//require '/var/www/html/vendor/autoload.php';
+require 'autoload.php';
 
 function addDonor($username, $email, $password, $organization, $address, $phoneNumber, $type)
 {
@@ -52,6 +52,8 @@ VALUE('$username', '$email', '$password', '$organization', '$address', '$phoneNu
 	}
 	return false;
 }
+
+
 
 function addDistributor($username, $email, $password, $organization, $address, $phoneNumber)
 {
@@ -103,7 +105,6 @@ function donorLogin($username, $password)
 	}
 	return false;
 }
-
 function donorFindById($id)
 {
 	$query = "SELECT id, username, organization FROM donor WHERE `id` = '$id' LIMIT 1";
@@ -127,7 +128,6 @@ function distributorLogin($username, $password)
 	}
 	return false;
 }
-
 function distributorFindById($id)
 {
 	$query = "SELECT id, username, organization FROM distributor WHERE `id` = '$id' LIMIT 1";
@@ -139,25 +139,35 @@ function distributorFindById($id)
 
 	return false;
 }
-
 function findDelivery($minLat, $maxLat, $minLon, $maxLon)
 {
+	//echo "success";
 	$query = "SELECT * FROM deliveries WHERE `validated` = 0 AND $minLat < `latitude` AND $maxLat > `latitude` AND $minLon < `longitude` AND $maxLon > `longitude'";
+	//echo "success";
 	$res = $mysqli->query($query);
-	
+	//echo "success";
 	if (mysql_num_rows($res)) {
+		//echo "success";
 		$info = mysqli_fetch_array($data);
+		//echo "success";
 		return $info;
 	}
 }
-
 function findDistribution($minLat, $maxLat, $minLon, $maxLon)
 {
+	echo "success ";
 	$query = "SELECT * FROM distributions WHERE `validated` = 0 AND $minLat < `latitude` AND $maxLat > `latitude` AND $minLon < `longitude` AND $maxLon > `longitude'";
-	$res = $mysqli->query($query);
+	echo "success ";
+	if ($mysqli->errno) 
+    	echo "FAILED";
 	
+	$res = $mysqli->query($query);
+	echo $res;
+	echo "success ";
 	if (mysql_num_rows($res)) {
+		echo "success ";
 		$info = mysqli_fetch_array($data);
+		echo "success";
 		return $info;
 	}
 }

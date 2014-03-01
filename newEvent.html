@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>CommunityFeed</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="css/bootswatch.min.css">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../bower_components/html5shiv/dist/html5shiv.js"></script>
+      <script src="../bower_components/respond/dest/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+<div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="index.html" class="navbar-brand">CommunityFeed</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav"> 
+            <li>
+              <a href="register.html">New Partner Registration</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="login.html" target="_blank">Login</a></li>
+          </ul>
+        </div>
+      </div>
+</div>
+
+
+<div class="col-lg-6 center-block" margin:0 auto;>
+    <h2 id="nav-tabs">Event Registration</h2>
+    <div class="bs-example">
+      <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+        <li class="active"><a href="#donation" data-toggle="tab">Donotion</a></li>
+        <li class=""><a href="#pick-up" data-toggle="tab">Pick-Up</a></li>
+        <li class=""><a href="#distribution" data-toggle="tab">Distribution</a></li>
+      </ul>
+
+
+      <div id="myTabContent" class="tab-content">
+        <div class="tab-pane fade active in" id="donation">
+          <div class="well">
+            <legend>Donation Registration</legend>
+              <form class="bs-example form-horizontal">
+              
+              <div class="form-group">
+                  <label for="donationDate" class="col-lg-2 control-label">Date</label>
+                  <div class="col-lg-10">
+                    <input type="date" class="form-control" id="donationDate">
+                  </div>
+                </div>
+
+                 <div class="form-group">
+                  <label for="donationStart" class="col-lg-2 control-label">Start</label>
+                    <div class="col-lg-10">
+                      <select class="form-control" id="donationStart">
+                        <option>7:00 AM</option><option>8:00 AM</option><option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option>
+                        <option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option>
+                        <option>7:00 PM</option><option>8:00 PM</option><option>9:00 PM</option><option>10:00 PM</option><option>11:00 PM</option>
+                      </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="donationEnd" class="col-lg-2 control-label">End</label>
+                    <div class="col-lg-10">
+                      <select class="form-control" id="donationEnd">
+                        <option>8:00 AM</option><option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option>
+                        <option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option>
+                        <option>7:00 PM</option><option>8:00 PM</option><option>9:00 PM</option><option>10:00 PM</option><option>11:00 PM</option><option>12:00 AM</option>
+                      </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-lg-10 col-lg-offset-2">
+                      <button class="btn btn-default">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+              </form>
+          </div>
+         </div>
+        <div class="tab-pane fade" id="distribution">
+          <div class="well">
+            <legend>Distribution Registration</legend>
+              <form class="bs-example form-horizontal">
+
+                <div class="form-group">
+                  <label for="distributionDate" class="col-lg-2 control-label">Date</label>
+                  <div class="col-lg-10">
+                    <input type="date" class="form-control" id="distributionDate">
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="distributionStart" class="col-lg-2 control-label">Start</label>
+                    <div class="col-lg-10">
+                      <select class="form-control" id="distributionStart">
+                        <option>7:00 AM</option><option>8:00 AM</option><option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option>
+                        <option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option>
+                        <option>7:00 PM</option><option>8:00 PM</option><option>9:00 PM</option><option>10:00 PM</option><option>11:00 PM</option>
+                      </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="distributionEnd" class="col-lg-2 control-label">End</label>
+                    <div class="col-lg-10">
+                      <select class="form-control" id="distributionEnd">
+                        <option>8:00 AM</option><option>9:00 AM</option><option>10:00 AM</option><option>11:00 AM</option><option>12:00 PM</option>
+                        <option>1:00 PM</option><option>2:00 PM</option><option>3:00 PM</option><option>4:00 PM</option><option>5:00 PM</option><option>6:00 PM</option>
+                        <option>7:00 PM</option><option>8:00 PM</option><option>9:00 PM</option><option>10:00 PM</option><option>11:00 PM</option><option>12:00 AM</option>
+                      </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <div class="col-lg-10 col-lg-offset-2">
+                      <button class="btn btn-default">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+                </div>
+              </form>
+          </div>
+         </div>
+
+         <div class="tab-pane fade" id="pick-up">
+          <div class="well">
+            <legend>Pick-Up Registration</legend>
+              <button class="btn btn-primary">View Map</button>
+          </div>
+        </div>
+      </div>
+   </div>
+</div>
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootswatch.js"></script>
+  </body>
+</html>

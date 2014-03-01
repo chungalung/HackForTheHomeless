@@ -9,15 +9,14 @@
 	$east = (double)  $_GET['east'];
 	$west = (double) $_GET['west'];
 	
-	/*
+	
 	echo $north;
 	echo $south;
 	echo $east;
 	echo $west;
-	*/
 	
-	/*
-	$result = findDistribution( $south, $north, $east, $west );
+	
+	$result = findDistribution( $south, $north, $west, $east );
 	echo $result;
 	
 	$data = array( "events" => array() );	
@@ -26,7 +25,7 @@
 						"address" => "TEST", "date" => "DATE", "start" => "5", "end" => "6" );
 		$data["events"][] = $event;
 	}
-	*/
+	
 	$data = array( "events" => array() );	
 	$event = array( "name" => "feedThePoor", "lat" => 37.3184130 , "lng" => -121.8686210,
 						"address" => "300-312 E Alma Ave San Jose, CA 95112", "start" => "2014-03-01 21:59:00", "end" => "2014-03-01 23:00:00" );

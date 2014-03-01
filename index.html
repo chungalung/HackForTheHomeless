@@ -106,7 +106,7 @@
       ['Santa Barbara',34.420831,-119.69819,"5:00PM"]
     ];
     
-    var zoomValue = 5;
+	var zoomValue = 5
     var latValue = 37.421791;
     var longValue = -122.083714;
     
@@ -134,6 +134,18 @@
       		mapTypeId: google.maps.MapTypeId.ROADMAP
     });
     var infowindow = new google.maps.InfoWindow();
+	
+	/*
+	var minLat = map.getBounds()[0][0];
+	var minLng = map.getBounds()[0][1];
+	var maxLat = map.getBounds()[1][0];
+	var maxLng = map.getBounds()[1][1];
+	*/
+	
+	
+	var bounds;
+	var NE;
+	var SW;
 	
 	// clear overlay function
 	google.maps.Map.prototype.clearOverlays = function() {
@@ -165,6 +177,23 @@
 		 google.maps.event.trigger(map, "resize");
 		 map.setCenter(center); 
 	});
+	 google.maps.event.addListener(map, 'idle', function() {
+		  bounds =  map.getBounds();
+		  ne = bounds.getNorthEast();
+		  sw = bounds.getSouthWest();
+		  //do whatever you want with those bounds
+ 	});
+	
+	google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
+    	//this part runs when the mapobject is created and rendered
+    	bounds =  map.getBounds();
+		NE = bounds.getNorthEast();
+		SW = bounds.getSouthWest();
+		//alert( bounds );
+		updateMarkers();
+		
+	});
+	
 
     function displayInfo(event){
     	alert( "Address: " + event[0] ); 
@@ -174,11 +203,10 @@
     	map.clearOverlays();
     	
     	
-    	/*
     	events.length = 0;
     	$.ajax({
     	    type: "POST",
-       		url: BASE_URL+"distrobutionInfo.php" ,
+       		url: BASE_URL+"distributionInfo.php" ,
         	data: { 
         		zoom: zoomValue,
     			lat: latValue,
@@ -187,6 +215,7 @@
         	dataType: "json",
         	timeout: 1500, // in milliseconds
     		success: function( data ) {
+    			/*
     			for( int i = 0; i < data["events"].length; i++ ){
 					events[i][0] = data["events"][i]["name"];
 					events[i][1] = data["events"][i]["lat"];
@@ -196,6 +225,7 @@
 					events[i][5] = data["events"][i]["start"];
 					events[i][6] = data["events"][i]["end"];
     			}
+    			*/
 				// Initialize Variables
 				for (var i = 0; i < events.length; i++) {  
 					var marker = new google.maps.Marker({
@@ -221,11 +251,12 @@
 			},
 			error: function(request, status, err) {
 				alert("ERROR: Refresh Page");
+				alert( request );
 			}
 		});
-    	*/
     	
     	
+    	/*
     	// comment this out when we implement POST and AJAX
     	// Initialize Variables
     	//$('#loading').removeClass('hidden');
@@ -249,13 +280,10 @@
         		}
       		})(marker, i));
     	}
-    	
+    	*/
     	
     }
     
-	$(document).ready(function(){
-		updateMarkers();
-	}); 
 	
     </script>
     <script src="js/bootstrap.min.js"></script>

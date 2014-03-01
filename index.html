@@ -11,6 +11,42 @@
       <script src="../bower_components/html5shiv/dist/html5shiv.js"></script>
       <script src="../bower_components/respond/dest/respond.min.js"></script>
     <![endif]-->
+    <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+    <style>
+    	#map {
+			font-family:Arial,Helvetica,sans-serif;
+			color: black;
+    		margin:0 auto;
+		}
+		div#holder {
+			position: relative;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		div.overlay {
+			position: absolute;
+			top: 0;
+			left:0;
+			right:0;
+			margin-left:auto;
+			margin-right: auto;
+			width: 80%;
+			height: 100%;
+			background-color: #fff;
+			opacity: 0.7;
+			z-index: 1;
+		}
+
+		div.overlay.standard { 
+			background: #fff url('img/loading.gif') 
+			no-repeat 50% 50%; }
+    </style>
+    <script>
+    	var BASE_URL = "http://students.engr.scu.edu/~achung1/HackForTheHomeless/Hack/";
+    </script>
   </head>
   <body>
 
@@ -68,13 +104,189 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="https://wrapbootstrap.com/?ref=bsw" target="_blank">Login</a></li>
           </ul>
-
+          
         </div>
       </div>
     </div>
+    <div id="holder" style="position: relative;">
+    	<div id="loading" class="overlay standard hidden">&nbsp</div>
+    	<div id="map" style="outline:solid black; width: 80%; height: 400px;"></div>
+	</div>
 
+	<div id="hostInfo" >
+		<p> YOLO </p>
+	</div>
 
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script>
+    
+    
+    // Event Name, Lat, Long, Address, start, end,
+	var events = [
+      ['Mountain View', 37.421791,-122.083714,"5:00PM"],
+      ['Sacramento', 38.581572,-121.4944,"5:00PM"],
+      ['San Diego',32.715329,-117.157255,"5:00PM"],
+      ['Modesto', 37.639097,-120.996878,"5:00PM"],     
+      ['Tahoe', 39.096849,-120.032351,"5:00PM"],
+      ['Las Vegas', 36.114646,-115.172816,"5:00PM"],
+      ['Reno', 39.529633,-119.813803 ,"5:00PM"],
+      ['Los Angeles', 34.052234,-118.243685,"5:00PM"],
+      ['San Francisco', 37.77493,-122.419416,"5:00PM"],
+      ['Santa Barbara',34.420831,-119.69819,"5:00PM"]
+    ];
+    
+    var zoomValue = 5;
+    var latValue = 37.421791;
+    var longValue = -122.083714;
+    
+    var x = document.getElementById("demo");
+	function getLocation()
+	  {
+	  if (navigator.geolocation)
+		{
+		navigator.geolocation.getCurrentPosition(showPosition);
+		}
+	  else{x.innerHTML = "Geolocation is not supported by this browser.";}
+	  }
+	function showPosition(position)
+	  {
+	  x.innerHTML = "Latitude: " + position.coords.latitude + 
+	  "<br>Longitude: " + position.coords.longitude; 
+  }
+    
+    // needed for storing info about markers
+    var markersArray = [];
+	
+	var map = new google.maps.Map(document.getElementById('map'), {
+    		zoom: zoomValue,
+      		center: new google.maps.LatLng(latValue,longValue),
+      		mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+    var infowindow = new google.maps.InfoWindow();
+	
+	// clear overlay function
+	google.maps.Map.prototype.clearOverlays = function() {
+		for (var i = 0; i < markersArray.length; i++ ) {
+			markersArray[i].setMap(null);
+		}
+		markersArray.length = 0;
+	}
+	
+	google.maps.event.addListener(map, 'dragend', function() { 
+		alert("Map Dragged: " + map.getCenter().lat() +','+ map.getCenter().lng());
+		latValue = map.getCenter().lat();
+		longValue = map.getCenter().lng();
+		updateMarkers();
+	});
+	
+	google.maps.event.addListener( map, 'zoom_changed', function(){
+		google.maps.event.addListenerOnce(map, 'idle', function (e) {
+			alert( 'ZoomChanged: ' + map.getZoom() );
+			zoomValue = map.getZoom();
+			latValue = map.getCenter().lat();
+			longValue = map.getCenter().lng();
+			updateMarkers();
+		});
+	});	
+	
+	google.maps.event.addDomListener(window, "resize", function() {
+		 var center = map.getCenter();
+		 google.maps.event.trigger(map, "resize");
+		 map.setCenter(center); 
+	});
+
+    function displayInfo(event){
+    	alert( "Address: " + event[0] ); 
+    }
+    
+    function updateMarkers( ){
+    	map.clearOverlays();
+    	
+    	
+    	/*
+    	events.length = 0;
+    	$.ajax({
+    	    type: "POST",
+       		url: BASE_URL+"distrobutionInfo.php" ,
+        	data: { 
+        		zoom: zoomValue,
+    			lat: latValue,
+    			lng: longValue
+    		},
+        	dataType: "json",
+        	timeout: 1500, // in milliseconds
+    		success: function( data ) {
+    			for( int i = 0; i < data["events"].length; i++ ){
+					events[i][0] = data["events"][i]["name"];
+					events[i][1] = data["events"][i]["lat"];
+					events[i][2] = data["events"][i]["lng"];
+					events[i][3] = data["events"][i]["address"];
+					events[i][4] = data["events"][i]["date"];
+					events[i][5] = data["events"][i]["start"];
+					events[i][6] = data["events"][i]["end"];
+    			}
+				// Initialize Variables
+				for (var i = 0; i < events.length; i++) {  
+					var marker = new google.maps.Marker({
+						position: new google.maps.LatLng(events[i][1], events[i][2]),
+						map: map
+					});
+					markersArray.push(marker);
+					google.maps.event.addListener(marker, 'click', (function(marker, i) {
+						return function() {
+							infowindow.setContent(events[i][0]);
+					
+							//$('html, body').animate({
+							//	scrollTop: $("#hostInfo").offset().top - 10
+							//}, 900);
+					
+							displayInfo(events[i]);
+							infowindow.open(map, marker);
+						}
+					})(marker, i));
+				}
+				$('#loading').addClass('hidden');
+				//alert( "Data Loaded: " + data );
+			},
+			error: function(request, status, err) {
+				alert("ERROR: Refresh Page");
+			}
+		});
+    	*/
+    	
+    	
+    	// comment this out when we implement POST and AJAX
+    	// Initialize Variables
+    	//$('#loading').removeClass('hidden');
+    	//setTimeout(function(){$('#loading').addClass('hidden');}, 2000);
+    	for (var i = 0; i < events.length; i++) {  
+			var marker = new google.maps.Marker({
+        		position: new google.maps.LatLng(events[i][1], events[i][2]),
+        		map: map
+      		});
+			markersArray.push(marker);
+			google.maps.event.addListener(marker, 'click', (function(marker, i) {
+      			return function() {
+      				infowindow.setContent(events[i][0]);
+      				
+	  				//$('html, body').animate({
+        			//	scrollTop: $("#question").offset().top - 10
+    				//}, 900);
+    				
+    				displayInfo(events[i]);
+      				infowindow.open(map, marker);
+        		}
+      		})(marker, i));
+    	}
+    	
+    	
+    }
+    
+	$(document).ready(function(){
+		updateMarkers();
+	}); 
+	
+    </script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootswatch.js"></script>
   </body>

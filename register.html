@@ -53,9 +53,13 @@
 
               <div id="myTabContent" class="tab-content">
                 <div class="tab-pane fade active in" id="home">
-                  <p>Donors supply food for those in need. (Restaurants, Supermarkets, Private Donors, etc.)</p><br />
-                  <br>
-                  <p>Distributors pick up food from donors and distribute the food to those in need. (Shelters, Food Banks, etc.)</p><br />
+
+                  <div class="well">
+                    <p>Donors supply food for those in need. (Restaurants, Supermarkets, Private Donors, etc.)</p><br />
+                    <br>
+                    <p>Distributors pick up food from donors and distribute the food to those in need. (Shelters, Food Banks, etc.)</p><br />
+                  </div>
+
                 </div>
                 <div class="tab-pane fade" id="donor">
                   <div class="well">
@@ -63,50 +67,57 @@
                       <fieldset>
                            <legend>Register As A Donor</legend>
                               <div class="form-group"> 
-                                <label for="inputName" class="col-lg-2 control-label">Organization</label>
+                                <label for="inputNameDonor" class="col-lg-2 control-label">Organization</label>
                                 <div class="col-lg-10">
-                                  <input type="text" class="form-control" id="inputName" placeholder="Organization">
+                                  <input type="text" class="form-control" id="inputNameDonor" placeholder="Organization">
                                 </div>
                               </div>
 
                               <div class="form-group"> 
-                                <label for="inputAddress" class="col-lg-2 control-label">Address</label>
+                                <label for="inputAddressDonor" class="col-lg-2 control-label">Address</label>
                                 <div class="col-lg-10">
-                                  <input type="text" class="form-control" id="inputAddress" placeholder="Address">
+                                  <input type="text" class="form-control" id="inputAddressDonor" placeholder="Address">
                                 </div>
                               </div>
 
                               <div class="form-group">
-                                <label for="inputPhone" class="col-lg-2 control-label">Phone Number</label>
+                                <label for="inputPhoneDonor" class="col-lg-2 control-label">Phone Number</label>
                                 <div class="col-lg-10">
-                                  <input type="tel" class="form-control" id="inputPhone" placeholder="Phone Number">
+                                  <input type="tel" class="form-control" id="inputPhoneDonor" placeholder="Phone Number">
                                 </div>
                               </div>
 
                              <div class="form-group"> 
-                                <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                                <label for="inputWebDonor" class="col-lg-2 control-label">Website</label>
                                 <div class="col-lg-10">
-                                  <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                  <input type="url" class="form-control" id="inputWebDonor" placeholder="Website">
+                                </div>
+                              </div>
+
+                             <div class="form-group"> 
+                                <label for="inputEmailDonor" class="col-lg-2 control-label">Email</label>
+                                <div class="col-lg-10">
+                                  <input type="email" class="form-control" id="inputEmailDonor" placeholder="Email">
+                                </div>
+                              </div>                              
+
+                              <div class="form-group">
+                                <label for="inputUsernameDonor" class="col-lg-2 control-label">Username</label>
+                                <div class="col-lg-10">
+                                  <input type="text" class="form-control" id="inputUsernameDonor" placeholder="Username">
                                 </div>
                               </div>
 
                               <div class="form-group">
-                                <label for="inputUsername" class="col-lg-2 control-label">Username</label>
+                                <label for="inputPasswordDonor" class="col-lg-2 control-label">Password</label>
                                 <div class="col-lg-10">
-                                  <input type="text" class="form-control" id="inputUsername" placeholder="Username">
-                                </div>
-                              </div>
-
-                              <div class="form-group">
-                                <label for="inputPassword" class="col-lg-2 control-label">Password</label>
-                                <div class="col-lg-10">
-                                  <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                  <input type="password" class="form-control" id="inputPasswordDonor" placeholder="Password">
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label for="inputConfirmPassword" class="col-lg-2 control-label">Confirm Password</label>
+                                <label for="inputConfirmPasswordDonor" class="col-lg-2 control-label">Confirm Password</label>
                                 <div class="col-lg-10">
-                                  <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Password">
+                                  <input type="password" class="form-control" id="inputConfirmPasswordDonor" placeholder="Password">
                                 </div>
                               </div>
                               <div class="form-group">
@@ -127,51 +138,61 @@
                     </form>
                   </div>
                 </div>
+
+
                 <div class="tab-pane fade" id="distributor">
                  <div class="well">
                     <form class="bs-example form-horizontal">
                       <fieldset>
                            <legend>Register As A Distributor</legend>
                               <div class="form-group"> 
-                                <label for="inputName" class="col-lg-2 control-label">Organization</label>
+                                <label for="inputNameDist" class="col-lg-2 control-label">Organization</label>
                                 <div class="col-lg-10">
-                                  <input type="text" class="form-control" id="inputName" placeholder="Organization">
+                                  <input type="text" class="form-control" id="inputNameDist" placeholder="Organization">
                                 </div>
                               </div>
                               <div class="form-group"> 
-                                <label for="inputAddress" class="col-lg-2 control-label">Address</label>
+                                <label for="inputAddressDist" class="col-lg-2 control-label">Address</label>
                                 <div class="col-lg-10">
-                                  <input type="text" class="form-control" id="inputAddress" placeholder="Address">
+                                  <input type="text" class="form-control" id="inputAddressDist" placeholder="Address">
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label for="inputPhone" class="col-lg-2 control-label">Phone Number</label>
+                                <label for="inputPhoneDist" class="col-lg-2 control-label">Phone Number</label>
                                 <div class="col-lg-10">
-                                  <input type="tel" class="form-control" id="inputPhone" placeholder="Phone Number">
+                                  <input type="tel" class="form-control" id="inputPhoneDist" placeholder="Phone Number">
                                 </div>
                               </div>
+
+                            <div class="form-group"> 
+                                <label for="inputWebDonor" class="col-lg-2 control-label">Website</label>
+                                <div class="col-lg-10">
+                                  <input type="url" class="form-control" id="inputWebDonor" placeholder="Website">
+                                </div>
+                              </div>
+
                              <div class="form-group"> 
-                                <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                                <label for="inputEmailDist" class="col-lg-2 control-label">Email</label>
                                 <div class="col-lg-10">
-                                  <input type="email" class="form-control" id="inputEmail" placeholder="Email">
+                                  <input type="email" class="form-control" id="inputEmailDist" placeholder="Email">
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label for="inputUsername" class="col-lg-2 control-label">Username</label>
+                                <label for="inputUsernameDist" class="col-lg-2 control-label">Username</label>
                                 <div class="col-lg-10">
-                                  <input type="text" class="form-control" id="inputUsername" placeholder="Username">
+                                  <input type="text" class="form-control" id="inputUsernameDist" placeholder="Username">
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                                <label for="inputPasswordDist" class="col-lg-2 control-label">Password</label>
                                 <div class="col-lg-10">
-                                  <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                                  <input type="password" class="form-control" id="inputPasswordDist" placeholder="Password">
                                 </div>
                               </div>
                               <div class="form-group">
-                                <label for="inputConfirmPassword" class="col-lg-2 control-label">Confirm Password</label>
+                                <label for="inputConfirmPasswordDist" class="col-lg-2 control-label">Confirm Password</label>
                                 <div class="col-lg-10">
-                                  <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Password">
+                                  <input type="password" class="form-control" id="inputConfirmPasswordDist" placeholder="Password">
                                 </div>
                               </div>
                                 <div class="col-lg-10 col-lg-offset-2">

@@ -18,6 +18,15 @@
 			color: black;
     		margin:0 auto;
 		}
+		#hostInfo {
+			position: absolute;
+			top: 0;
+			left:0;
+			right:0;
+			margin-left:auto;
+			margin-right: auto;
+			width: 90%;
+		}
 		div#holder {
 			position: relative;
 		}
@@ -33,7 +42,7 @@
 			right:0;
 			margin-left:auto;
 			margin-right: auto;
-			width: 80%;
+			width: 90%;
 			height: 100%;
 			background-color: #fff;
 			opacity: 0.7;
@@ -67,7 +76,7 @@
             <li>
               <a href="register.html">New Partner Registration</a>
             </li>
-
+		</ul>
 
           <ul class="nav navbar-nav navbar-right">
             <li><a href="login.html" target="_blank">Login</a></li>
@@ -81,11 +90,21 @@
 
     <div id="holder" style="position: relative;">
     	<div id="loading" class="overlay standard hidden">&nbsp</div>
-    	<div id="map" style="outline:solid black; width: 80%; height: 400px;"></div>
+    	<div id="map" style="outline:solid black; width: 90%; height: 400px;"></div>
 	</div>
 
-	<div id="hostInfo" >
-		<p> YOLO </p>
+
+	<div class="row">
+	  <div class="col-lg-12">
+		<div class="bs-example">
+		<h2></h2>
+		  <div id="hostInfo" class="jumbotron">
+			<h2>Press an icon on the map for more information.</h2>
+			<p>Find events sponsoring food for the needy near you.</p>
+			<p><a class="btn btn-primary btn-lg">Learn more</a></p>
+		  </div>
+		</div>
+	  </div>
 	</div>
 
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -106,9 +125,9 @@
       ['Santa Barbara',34.420831,-119.69819,"5:00PM"]
     ];
     
-	var zoomValue = 5
-    var latValue = 37.421791;
-    var longValue = -122.083714;
+	var zoomValue = 13;
+    var latValue = 37.33680885324228;
+    var longValue = -121.91050767065428;
     
     var x = document.getElementById("demo");
 	function getLocation()
@@ -156,7 +175,8 @@
 	}
 	
 	google.maps.event.addListener(map, 'dragend', function() { 
-		alert("Map Dragged: " + map.getCenter().lat() +','+ map.getCenter().lng());
+		//alert("Map Dragged: " + map.getCenter().lat() +','+ map.getCenter().lng());
+		//alert("Zoom " + map.getZoom() );
 		latValue = map.getCenter().lat();
 		longValue = map.getCenter().lng();
 		updateMarkers();
@@ -181,7 +201,7 @@
 	
 
     function displayInfo(event){
-    	alert( "Address: " + event[0] ); 
+    	//alert( "Address: " + event[0] ); 
     }
     
     function updateMarkers( ){
@@ -194,11 +214,8 @@
 		var WestBound = bounds.getSouthWest().lng();
 		
 		//alert( "Good: ");
-		alert( BASE_URL+"distributionInfo.php");
+		//alert( BASE_URL+"distributionInfo.php");
     	
-    	
-
-    	events.length = 0;
     	$.ajax({
     	    type: "GET",
        		url: BASE_URL+"distributionInfo.php" ,
@@ -211,18 +228,22 @@
         	dataType: "json",
         	timeout: 1500, // in milliseconds
     		success: function( data ) {
-    			alert( "Success");
-    			/*
-    			for( int i = 0; i < data["events"].length; i++ ){
-					events[i][0] = data["events"][i]["name"];
-					events[i][1] = data["events"][i]["lat"];
-					events[i][2] = data["events"][i]["lng"];
-					events[i][3] = data["events"][i]["address"];
-					events[i][4] = data["events"][i]["date"];
-					events[i][5] = data["events"][i]["start"];
-					events[i][6] = data["events"][i]["end"];
+    			
+    			events.length = 0;
+    			var eventLength = parseInt(data["events"].length);
+
+    			for(var i = 0; i < eventLength; i++ ){
+    				//alert("WOW");
+    				var temp = [];
+					temp.push(data["events"][String(i)]["name"]);
+					temp.push(data["events"][String(i)]["lat"]);
+					temp.push(data["events"][String(i)]["lng"]);
+					temp.push(data["events"][String(i)]["address"]);
+					temp.push(data["events"][String(i)]["start"]);
+					temp.push(data["events"][String(i)]["end"]);
+					events.push(temp);
     			}
-    			*/
+
 				// Initialize Variables
 				for (var i = 0; i < events.length; i++) {  
 					var marker = new google.maps.Marker({
@@ -234,9 +255,9 @@
 						return function() {
 							infowindow.setContent(events[i][0]);
 					
-							//$('html, body').animate({
-							//	scrollTop: $("#hostInfo").offset().top - 10
-							//}, 900);
+							$('html, body').animate({
+								scrollTop: $("#hostInfo").offset().top - 10
+							}, 900);
 					
 							displayInfo(events[i]);
 							infowindow.open(map, marker);

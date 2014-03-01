@@ -1,7 +1,7 @@
 <?php
 
-		$result = findDistribution( 30,40,-150,0);
-		echo $result;
+	$result = findDistribution( 30,40,-150,0);
+	echo $result;
 
 function addDonor($username, $email, $password, $organization, $address, $phoneNumber, $type)
 {
@@ -216,5 +216,6 @@ function findDistribution($minLat, $maxLat, $minLon, $maxLon)
 
 	$info = mysqli_fetch_array($res);
 	//var_dump($info);
-	return $info
+	return $info;
 }
+?>

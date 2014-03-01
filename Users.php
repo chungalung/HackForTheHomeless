@@ -1,20 +1,22 @@
 <?php
 
-$Server="50i50.org";
-$Catalog="homeless";
-$User="jesus";
-$Password="ayala";
-
-$mysqli = new mysqli($Server,$User,$Password,$Catalog);
-
-if ($mysqli->errno) 
-    printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
-
-
-require 'autoload.php';
+		$result = findDistribution( 30,40,-150,0);
+		echo $result;
 
 function addDonor($username, $email, $password, $organization, $address, $phoneNumber, $type)
 {
+	$Server="50i50.org";
+	$Catalog="homeless";
+	$User="jesus";
+	$Password="ayala";
+
+	$mysqli = new mysqli($Server,$User,$Password,$Catalog);
+
+	if ($mysqli->errno) 
+		printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
+	
+	require 'autoload.php';
+	
 	$geocoder = new \Geocoder\Geocoder();
 	$adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
 	$chain    = new \Geocoder\Provider\ChainProvider(array(
@@ -57,6 +59,18 @@ VALUE('$username', '$email', '$password', '$organization', '$address', '$phoneNu
 
 function addDistributor($username, $email, $password, $organization, $address, $phoneNumber)
 {
+	$Server="50i50.org";
+	$Catalog="homeless";
+	$User="jesus";
+	$Password="ayala";
+
+	$mysqli = new mysqli($Server,$User,$Password,$Catalog);
+
+	if ($mysqli->errno) 
+		printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
+
+	require 'autoload.php';
+	
 	$geocoder = new \Geocoder\Geocoder();
 	$adapter  = new \Geocoder\HttpAdapter\CurlHttpAdapter();
 	$chain    = new \Geocoder\Provider\ChainProvider(array(
@@ -96,6 +110,16 @@ VALUE('$username', '$email', '$password', '$organization', '$address', '$phoneNu
 
 function donorLogin($username, $password)
 {
+	$Server="50i50.org";
+	$Catalog="homeless";
+	$User="jesus";
+	$Password="ayala";
+
+	$mysqli = new mysqli($Server,$User,$Password,$Catalog);
+
+	if ($mysqli->errno) 
+		printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
+
 	$username = mysql_real_escape_string($username);
 	$password = mysql_real_escape_string($password);
 	$query = "SELECT `id`, `username`, `organization` FROM `donor` WHERE `username` = '$username AND `password` = '$password' LIMIT 1";
@@ -107,6 +131,16 @@ function donorLogin($username, $password)
 }
 function donorFindById($id)
 {
+	$Server="50i50.org";
+	$Catalog="homeless";
+	$User="jesus";
+	$Password="ayala";
+
+	$mysqli = new mysqli($Server,$User,$Password,$Catalog);
+
+	if ($mysqli->errno) 
+		printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
+
 	$query = "SELECT `id`, `username`, `organization` FROM `donor` WHERE `id` = '$id' LIMIT 1";
 	$res = $mysqli->query($query);
 
@@ -119,6 +153,16 @@ function donorFindById($id)
 
 function distributorLogin($username, $password)
 {
+	$Server="50i50.org";
+	$Catalog="homeless";
+	$User="jesus";
+	$Password="ayala";
+
+	$mysqli = new mysqli($Server,$User,$Password,$Catalog);
+
+	if ($mysqli->errno) 
+		printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
+
 	$username = mysql_real_escape_string($username);
 	$password = mysql_real_escape_string($password);
 	$query = "SELECT `id`, `username`, `organization` FROM `distributor` WHERE `username` = '$username AND `password` = '$password' LIMIT 1";
@@ -130,6 +174,15 @@ function distributorLogin($username, $password)
 }
 function distributorFindById($id)
 {
+	$Server="50i50.org";
+	$Catalog="homeless";
+	$User="jesus";
+	$Password="ayala";
+
+	$mysqli = new mysqli($Server,$User,$Password,$Catalog);
+
+	if ($mysqli->errno) 
+		printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
 	$query = "SELECT `id`, `username`, `organization` FROM `distributor` WHERE `id` = '$id' LIMIT 1";
 	$res = $mysqli->query($query);
 
@@ -141,8 +194,17 @@ function distributorFindById($id)
 }
 function findDelivery($minLat, $maxLat, $minLon, $maxLon)
 {
-	//echo "success";
-	$query = "SELECT * FROM `deliveries` WHERE `validated` = 0 AND $minLat < `latitude` AND $maxLat > `latitude` AND $minLon < `longitude` AND $maxLon > `longitude'";
+	$Server="50i50.org";
+	$Catalog="homeless";
+	$User="jesus";
+	$Password="ayala";
+
+	$mysqli = new mysqli($Server,$User,$Password,$Catalog);
+
+	if ($mysqli->errno) 
+		printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
+		
+	$query = "SELECT * FROM `deliveries` WHERE `validated` = 0 AND (`latitude` BETWEEN $minLat AND $maxLat) AND (`longitude` BETWEEN $minLon AND $maxLon)";
 	//echo "success";
 	$res = $mysqli->query($query);
 	//echo "success";
@@ -155,19 +217,23 @@ function findDelivery($minLat, $maxLat, $minLon, $maxLon)
 }
 function findDistribution($minLat, $maxLat, $minLon, $maxLon)
 {
-	echo "success ";
-	$query = "SELECT * FROM `distributions` WHERE `validated` = 0 AND $minLat < `latitude` AND $maxLat > `latitude` AND $minLon < `longitude` AND $maxLon > `longitude'";
-	echo "success ";
+	$Server="50i50.org";
+	$Catalog="homeless";
+	$User="jesus";
+	$Password="ayala";
+
+	$mysqli = new mysqli($Server,$User,$Password,$Catalog);
+
 	if ($mysqli->errno) 
-    	echo "FAILED";
+		printf("Unable to connect to the database:<br /> %s",$mysqli->error);
+		
+	//echo "success ";
+	$query = "SELECT * FROM `distributions` WHERE (`latitude` BETWEEN $minLat AND $maxLat) AND (`longitude` BETWEEN $minLon AND $maxLon) AND endTime > NOW()";
+	//echo "success ";
 	
 	$res = $mysqli->query($query);
-	echo $res;
-	echo "success ";
-	if (mysql_num_rows($res)) {
-		echo "success ";
-		$info = mysqli_fetch_array($data);
-		echo "success";
-		return $info;
-	}
+
+	$info = mysqli_fetch_array($res);
+	var_dump($info);
+
 }

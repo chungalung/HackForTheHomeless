@@ -4,22 +4,9 @@
 	//echo "BLAH";
 
 	
-	$north = (double) $_GET['north'];
-	$south = (double) $_GET['south'];
-	$east = (double)  $_GET['east'];
-	$west = (double) $_GET['west'];
-	
-	
-	echo $north;
-	echo $south;
-	echo $east;
-	echo $west;
-	
-	
-	/*
-	$result = findDistribution( $south, $north, $east, $west );
+	$result = findDistribution( -150, 150, 30, 40);
 	echo $result;
-	
+	/*
 	$data = array( "events" => array() );	
 	if( result != false ){
 		$event = array( "name" => "TEST", "lat" => ($north+$south)/2.0 , "lng" => ($east+$west)/2.0,

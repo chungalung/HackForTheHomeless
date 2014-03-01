@@ -124,10 +124,7 @@ function donorLogin($username, $password)
 	$password = mysql_real_escape_string($password);
 	$query = "SELECT `id`, `username`, `organization` FROM `donor` WHERE `username` = '$username AND `password` = '$password' LIMIT 1";
 	$res = $mysqli->query($query);
-	if (mysql_num_rows($res)) {
-		return mysql_fetch_assoc($res);
-	}
-	return false;
+	return mysqli_fetch_array($res);
 }
 function donorFindById($id)
 {
@@ -143,12 +140,7 @@ function donorFindById($id)
 
 	$query = "SELECT `id`, `username`, `organization` FROM `donor` WHERE `id` = '$id' LIMIT 1";
 	$res = $mysqli->query($query);
-
-	if (mysql_num_rows($res)) {
-		return mysql_fetch_assoc($res);
-	}
-
-	return false;
+	return mysqli_fetch_array($res);
 }
 
 function distributorLogin($username, $password)
@@ -167,10 +159,7 @@ function distributorLogin($username, $password)
 	$password = mysql_real_escape_string($password);
 	$query = "SELECT `id`, `username`, `organization` FROM `distributor` WHERE `username` = '$username AND `password` = '$password' LIMIT 1";
 	$res = $mysqli->query($query);
-	if (mysql_num_rows($res)) {
-		return mysql_fetch_assoc($res);
-	}
-	return false;
+	return mysqli_fetch_array($res);
 }
 function distributorFindById($id)
 {
@@ -185,12 +174,7 @@ function distributorFindById($id)
 		printf("Unable to connect to the database:<br /> %s",$mysqli->error); 
 	$query = "SELECT `id`, `username`, `organization` FROM `distributor` WHERE `id` = '$id' LIMIT 1";
 	$res = $mysqli->query($query);
-
-	if (mysql_num_rows($res)) {
-		return mysql_fetch_assoc($res);
-	}
-
-	return false;
+	return mysqli_fetch_array($res);
 }
 function findDelivery($minLat, $maxLat, $minLon, $maxLon)
 {
@@ -208,12 +192,9 @@ function findDelivery($minLat, $maxLat, $minLon, $maxLon)
 	//echo "success";
 	$res = $mysqli->query($query);
 	//echo "success";
-	if (mysql_num_rows($res)) {
-		//echo "success";
-		$info = mysqli_fetch_array($data);
-		//echo "success";
-		return $info;
-	}
+	$info = mysqli_fetch_array($res);
+	//echo "success";
+	return $info;
 }
 function findDistribution($minLat, $maxLat, $minLon, $maxLon)
 {
@@ -234,6 +215,6 @@ function findDistribution($minLat, $maxLat, $minLon, $maxLon)
 	$res = $mysqli->query($query);
 
 	$info = mysqli_fetch_array($res);
-	var_dump($info);
-
+	//var_dump($info);
+	return $info
 }

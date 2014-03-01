@@ -54,7 +54,7 @@
 			no-repeat 50% 50%; }
     </style>
     <script>
-    	var BASE_URL = "http://students.engr.scu.edu/~achung1/HackForTheHomeless/Hack/";
+    	var BASE_URL = "http://50i50.org/Test/HackForTheHomeless/";
     </script>
   </head>
   <body>
@@ -112,20 +112,8 @@
     
     
     // Event Name, Lat, Long, Address, start, end,
-	var events = [
-      ['Mountain View', 37.421791,-122.083714,"5:00PM"],
-      ['Sacramento', 38.581572,-121.4944,"5:00PM"],
-      ['San Diego',32.715329,-117.157255,"5:00PM"],
-      ['Modesto', 37.639097,-120.996878,"5:00PM"],     
-      ['Tahoe', 39.096849,-120.032351,"5:00PM"],
-      ['Las Vegas', 36.114646,-115.172816,"5:00PM"],
-      ['Reno', 39.529633,-119.813803 ,"5:00PM"],
-      ['Los Angeles', 34.052234,-118.243685,"5:00PM"],
-      ['San Francisco', 37.77493,-122.419416,"5:00PM"],
-      ['Santa Barbara',34.420831,-119.69819,"5:00PM"]
-    ];
-    
-	var zoomValue = 13;
+	var events = [];
+	var zoomValue = 12;
     var latValue = 37.33680885324228;
     var longValue = -121.91050767065428;
     
@@ -199,9 +187,22 @@
 		updateMarkers();
 	});
 	
-
     function displayInfo(event){
     	//alert( "Address: " + event[0] ); 
+    	//event
+    	$("div#hostInfo").html('<h3>Organizer: ' + event[0] + '</h3></br>'
+    		+ '<p>Address: &nbsp    ' + event[3] + '</br>'
+    		+ 'Start: &nbsp    ' + event[4] +  '</br>'
+    		+ 'End: &nbsp    ' + event[5] + '</p>' 
+    		+ '<p><a id="resetButton" class="btn btn-primary btn-lg">Reset</a></p>'
+    	);
+    	
+    	$("#resetButton").click( function(){
+    		$("div#hostInfo").html( '<h2>Press an icon on the map for more information.</h2>'
+    		+ '<p>Find events sponsoring food for the needy near you.</p>'
+			+ '<p><a class="btn btn-primary btn-lg">Learn more</a></p>' );
+    	});
+
     }
     
     function updateMarkers( ){
@@ -269,36 +270,10 @@
 			},
 			error: function(request, status, err) {
 				alert("ERROR: Refresh Page");
-				alert( request );
+				//alert( request );
 			}
 		});
     	
-    	
-    	/*
-    	// comment this out when we implement POST and AJAX
-    	// Initialize Variables
-    	//$('#loading').removeClass('hidden');
-    	//setTimeout(function(){$('#loading').addClass('hidden');}, 2000);
-    	for (var i = 0; i < events.length; i++) {  
-			var marker = new google.maps.Marker({
-        		position: new google.maps.LatLng(events[i][1], events[i][2]),
-        		map: map
-      		});
-			markersArray.push(marker);
-			google.maps.event.addListener(marker, 'click', (function(marker, i) {
-      			return function() {
-      				infowindow.setContent(events[i][0]);
-      				
-	  				//$('html, body').animate({
-        			//	scrollTop: $("#question").offset().top - 10
-    				//}, 900);
-    				
-    				displayInfo(events[i]);
-      				infowindow.open(map, marker);
-        		}
-      		})(marker, i));
-    	}
-    	*/
     	
     }
     

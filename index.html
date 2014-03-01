@@ -135,7 +135,7 @@
       ['Santa Barbara',34.420831,-119.69819,"5:00PM"]
     ];
     
-    var zoomValue = 5;
+	var zoomValue = 5
     var latValue = 37.421791;
     var longValue = -122.083714;
     
@@ -164,6 +164,18 @@
     });
     var infowindow = new google.maps.InfoWindow();
 	
+	/*
+	var minLat = map.getBounds()[0][0];
+	var minLng = map.getBounds()[0][1];
+	var maxLat = map.getBounds()[1][0];
+	var maxLng = map.getBounds()[1][1];
+	*/
+	
+	/*
+	var bounds = map.getBounds();
+	var NE = bounds.getNorthEast();
+	var SW = bounds.getSouthWest();
+	*/
 	// clear overlay function
 	google.maps.Map.prototype.clearOverlays = function() {
 		for (var i = 0; i < markersArray.length; i++ ) {
@@ -194,14 +206,20 @@
 		 google.maps.event.trigger(map, "resize");
 		 map.setCenter(center); 
 	});
+	
+	
 
     function displayInfo(event){
     	alert( "Address: " + event[0] ); 
+    	alert( bounds );
     }
     
     function updateMarkers( ){
     	map.clearOverlays();
-    	
+    	var bounds = map.getBounds();
+		//var NE = bounds.getNorthEast();
+		//var SW = bounds.getSouthWest();
+		alert( bounds );
     	
     	/*
     	events.length = 0;

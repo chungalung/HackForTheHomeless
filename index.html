@@ -144,8 +144,8 @@
 	
 	
 	var bounds;
-	var NE;
-	var SW;
+	var NEValue;
+	var SWValue;
 	
 	// clear overlay function
 	google.maps.Map.prototype.clearOverlays = function() {
@@ -164,10 +164,6 @@
 	
 	google.maps.event.addListener( map, 'zoom_changed', function(){
 		google.maps.event.addListenerOnce(map, 'idle', function (e) {
-			alert( 'ZoomChanged: ' + map.getZoom() );
-			zoomValue = map.getZoom();
-			latValue = map.getCenter().lat();
-			longValue = map.getCenter().lng();
 			updateMarkers();
 		});
 	});	
@@ -177,21 +173,10 @@
 		 google.maps.event.trigger(map, "resize");
 		 map.setCenter(center); 
 	});
-	 google.maps.event.addListener(map, 'idle', function() {
-		  bounds =  map.getBounds();
-		  ne = bounds.getNorthEast();
-		  sw = bounds.getSouthWest();
-		  //do whatever you want with those bounds
- 	});
 	
 	google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
     	//this part runs when the mapobject is created and rendered
-    	bounds =  map.getBounds();
-		NE = bounds.getNorthEast();
-		SW = bounds.getSouthWest();
-		//alert( bounds );
 		updateMarkers();
-		
 	});
 	
 
@@ -201,20 +186,32 @@
     
     function updateMarkers( ){
     	map.clearOverlays();
+    	$('#loading').removeClass('hidden');
+    	bounds =  map.getBounds();
+		var NorthBound = bounds.getNorthEast().lat();
+		var SouthBound = bounds.getSouthWest().lat();
+		var EastBound = bounds.getNorthEast().lng();
+		var WestBound = bounds.getSouthWest().lng();
+		
+		//alert( "Good: ");
+		alert( BASE_URL+"distributionInfo.php");
     	
     	
+
     	events.length = 0;
     	$.ajax({
-    	    type: "POST",
+    	    type: "GET",
        		url: BASE_URL+"distributionInfo.php" ,
         	data: { 
-        		zoom: zoomValue,
-    			lat: latValue,
-    			lng: longValue
+        		north: NorthBound,
+    			south: SouthBound,
+    			east: EastBound,
+    			west: WestBound
     		},
         	dataType: "json",
         	timeout: 1500, // in milliseconds
     		success: function( data ) {
+    			alert( "Success");
     			/*
     			for( int i = 0; i < data["events"].length; i++ ){
 					events[i][0] = data["events"][i]["name"];
